@@ -1,5 +1,5 @@
 <?php
-  require_once "lib/include.php"
+  require_once "lib/include.php";
   $top_song=get_top_song();
 ?>
 
@@ -137,16 +137,19 @@
           <p class="star"><span>本周最火</span></p><div class="clr"></div>
           <ul class="ex_menu">
             <?php
-              foreach ($top_song as $key => $value) {
-                //$li= "<li><a href=\"play.php?song=".".mp3"."title=\"".">"."-"."</a></li>";
+		//print_r(top_song);
+              foreach ($top_song as  $value) {
+                $li= "<li><a href=\"play.php?song=".$value["song_name"].".mp3\""." title=\"".$value["song_name"]."\">".$value["song_name"]."-".$value["singer_name"]."</a></li>";
+		//echo $value["song_name"];
+		echo $li;
               }
             ?>
-            <li><a href="#" title=" "><br>爱你-林俊杰</br></a></li>
+            <!--li><a href="#" title=" "><br>爱你-林俊杰</br></a></li>
             <li><a href="play.php?song=sleephead.mp3" title="sleephead">sleephead-garlen</a></li>
             <li><a href="#" title=" ">我欲成仙-刘欢</a></li>
             <li><a href="#" title=" ">流年-王菲</a></li>
             <li><a href="#" title=" ">为你钟情-张国荣</a></li>
-            <li><a href="#" title=" ">一生中最爱-谭咏麟</a></li>
+            <li><a href="#" title=" ">一生中最爱-谭咏麟</a></li-->
           </ul>
         </div>
       </div>

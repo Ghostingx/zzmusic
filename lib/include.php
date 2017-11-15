@@ -1,2 +1,2 @@
 <?php
-require_once "get_music_info.php"
+require_once "get_music_info.php";
