@@ -3,7 +3,7 @@ function $(s){
 }
 
 var lis=$('#list li');
-var play=$('#play')[0];
+var resume=$('#resume')[0];
 var pause=$('#pause')[0]
 var size=128;
 
@@ -38,13 +38,13 @@ pause.onclick=function(){
   }
   mv.stop();
 }
-play.onclick=function(){
+resume.onclick=function(){
   if(this.className == "selected"){
     this.className ="" ;
   }else{
    this.className == "selected";
   }
-  mv.play("../media/"+isPlaying);
+  mv.resume();
 }
 
 

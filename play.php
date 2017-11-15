@@ -24,7 +24,7 @@
 	<div>
       <ul class="type" id="play_ctrl">
         <li id="prev" >上一曲</li>
-        <li id="play" >播放</li>
+        <li id="resume" >继续</li>
         <li id="pause" >暂停</li>
         <li id="next" >下一曲</li>
       </ul></div>
