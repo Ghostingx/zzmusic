@@ -56,9 +56,29 @@ body{
   left: -webkit-calc(15% + 20px);
   left: calc(15% + 20px);
 }
+
+
+
+input[type=range] {
+	-webkit-appearance: none;
+	width: 300px;
+	border-radius:0; /*这个属性设置使填充进度条时的图形为圆角*/
+}
+
+input[type=range]:focus {
+	outline: none;
+}
+
+
+
+
 #volume{
   left:100px;
   cursor:pointer;
+}
+.play_pro{
+  height:1px;
+  line-height:10px;
 }
 .vol{
   color:red;
@@ -69,19 +89,22 @@ body{
   height: 20px;
   margin: 0 auto;
 }
+#play_ctrl{
+  width: 400px;
+  height: 20px;
+  margin:0 auto;
+}
 #play_ctrl li{
-  margin-left:10px;
-  cursor:pointer;
+  margin:10px;
   width: 73px;
-  border: 1px solid #aaa;
-  border-radius: 5px;
+  border: 0;
   list-style: none;
   float: left;
 }
 .type li{
-  margin-left:10px;
-  cursor:pointer;
+  margin-left:30px;
   width: 100px;
+  cursor:pointer;
   border: 1px solid #aaa;
   border-radius: 5px;
   list-style: none;
@@ -140,5 +163,10 @@ input[type="range"]::-moz-range-thumb{
   .left,.right{
     top: 100px;
   }
+}
+#play_ctrl img{
+  cursor:pointer;
+  width:25px;
+  height:25px;
 }
 

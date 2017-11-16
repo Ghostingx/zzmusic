@@ -23,7 +23,10 @@ function MusicVisualizer(obj){
 }
 
 MusicVisualizer.ac=new (window.AudioContext||window.webkitAudioContext)();
-
+//var isPlaying = false;
+//var offset = 0;
+//var time = 0;
+//var total = 0;
 MusicVisualizer.prototype.load=function(url,fun){
   this.xhr.abort();
   this.xhr.open("GET",url);
@@ -41,46 +44,80 @@ MusicVisualizer.prototype.load=function(url,fun){
 MusicVisualizer.prototype.decode=function(arraybuffer,fun){
 	var self = this;
   MusicVisualizer.ac.decodeAudioData(arraybuffer,function(buffer){
-    self.start(buffer); 
+    self.start(buffer,0); 
     self.buffer = buffer;
-    console.log(buffer);
-    console.log(self.buffer);
+    //console.log(buffer);
+   // console.log(self.buffer);
   },function(err){
     console.log(err);
   });
 }
 
 MusicVisualizer.prototype.play=function(url){
+  //console.log(curTime);
+  curTime = 0;
+  clearInterval(timeinter);
+  this.startOffset = 0;
+   $('.endTime')[0].innerHTML="00:00";
   var n=++this.count;
   var self=this;
-  var offset = this.startOffset;
+  //var offset = this.startOffset;
   this.source&&this.stop();
+  if(this.buffer){
+    this.start(this.buffer,0)
+  }else{
   this.load(url,function(arraybuffer){
     self.decode(arraybuffer,function(){})
   });
+  }
 }
 
-MusicVisualizer.prototype.start = function(buffer){
+MusicVisualizer.prototype.start = function(buffer,time){
         var bs=MusicVisualizer.ac.createBufferSource();
         bs.connect(this.analyser);
         bs.buffer=buffer;
         //console.log(Math.round(buffer.duration));
       // console.log(offset);
         this.totalTime = buffer.duration;
-        bs[bs.start?"start":"noteOn"](0,this.startOffset % this.totalTime);;
+	var temp = Math.round(this.totalTime)%60;
+	if(temp<10){
+		$('.endTime')[0].innerHTML="0"+Math.floor(Math.round(this.totalTime)/60)+":"+"0"+temp;
+	}else{
+        	$('.endTime')[0].innerHTML="0"+Math.floor(Math.round(this.totalTime)/60)+":"+temp;
+	}
+//	total = this.totalTime;
+	this.startTime = MusicVisualizer.ac.currentTime;
+//	time = this.startTime;
+	if(time < 0){
+	        bs[bs.start?"start":"noteOn"](0,this.startOffset % this.totalTime);
+	}else if(time == 0){
+		bs[bs.start?"start":"noteOn"](0);
+	}else{
+		bs[bs.start?"start":"noteOn"](0,time);
+	}
         this.source=bs;
+//	isPlaying = true;
+	console.log(bs);
       }
 
-MusicVisualizer.prototype.resume=function(){
+MusicVisualizer.prototype.resume=function(value){
   //var self =this;
-  console.log(this.buffer);
-  this.start(this.buffer);
-
+  if(value > 0){
+    newOffset = value*this.totalTime/100;
+    this.start(this.buffer,newOffset);
+    this.startOffset = newOffset;
+  }else{
+    console.log(this.buffer);
+    this.start(this.buffer,-1);
+  }
 }
 
 MusicVisualizer.prototype.stop=function(){
   this.source[this.source.stop?"stop":"noteOff"](0);
-  this.startOffset = MusicVisualizer.ac.currentTime - this.startTime;
+//  isPlaying = false;
+  this.startOffset += MusicVisualizer.ac.currentTime - this.startTime;
+//  offset = this.startOffset;
+//  time = this.startTime;
 }
 
 MusicVisualizer.prototype.changeVolume=function(percent){
@@ -103,3 +140,11 @@ MusicVisualizer.prototype.visualize=function(){
 
   requestAnimationFrame(v);
 }
+
+//setInterval(function(){
+//	if(isPlaying){
+//		offset  += 0.1;
+//		console.log(offset);
+//		$('.play_pro')[0].value = offset / total  * 100;
+//	}
+//},100);

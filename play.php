@@ -22,12 +22,18 @@
 	</div>
 	<br/>
 	<div>
-      <ul class="type" id="play_ctrl">
-        <li id="prev" >上一曲</li>
-        <li id="resume" >继续</li>
-        <li id="pause" >暂停</li>
-        <li id="next" >下一曲</li>
-      </ul></div>
+	<div>
+	<span class="startTime">00:00</span>
+	<input class="play_pro" type="range" min="0" max="100" value="0">
+	<span class="endTime">00.00</span>
+	</div>
+	<div>
+        <ul id="play_ctrl">
+        <li><img id="prev" src="resources/bw.png" ></li>
+        <!--li><img id="resume" src="resources/play.png" ></li-->
+        <li><img id="pause_con" src="resources/stop.png" ></li>
+        <li><img id="next" src="resources/fw.png" ></li>
+      </ul></div></div>
     </div>
     <div class="left">
       <ul id="list">
@@ -51,6 +57,11 @@
     <div class="right" id="box"></div>
     <script src="javascript/MusicVisualizer.js"></script>
     <script src='javascript/index.js'></script>
+    <script src='javascript/rangeSlider.js'></script>
+    <script src="js/jquery-3.2.1.js"></script>
+    <script>
+	$('#volume').RangeSlider({ min: 0,   max: 100,  step: 0.1});    
+    </script>
   </body>
 </html>
 

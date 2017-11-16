@@ -3,8 +3,12 @@ function $(s){
 }
 
 var lis=$('#list li');
-var resume=$('#resume')[0];
-var pause=$('#pause')[0]
+//var resume=$('#resume')[0];
+var pause_con=$('#pause_con')[0]
+var playing = false;
+var timeinter;
+var curTime = 0;
+
 var size=128;
 
 var box=$("#box")[0];
@@ -27,25 +31,71 @@ for(var i=0;i<lis.length;i++){
     }
     this.className="selected";
     mv.play("../media/"+this.title);
+    pause_con.src="resources/play.png";
     isPlaying=this.title;
+    playing=true;
+    timeinter = setInterval(function(){
+            if(playing){
+                curTime += 0.1;
+	        //console.log(curTime);
+	    }
+            if(curTime-Math.round(curTime)>=0){
+		var temp = Math.round(curTime)%60;
+		if(temp<10){
+			$('.startTime')[0].innerHTML="0"+Math.floor(Math.round(curTime)/60)+":"+"0"+temp;
+		}else
+	        $('.startTime')[0].innerHTML="0"+Math.floor(Math.round(curTime)/60)+":"+temp;
+            }
+	    //console.log(mv.totalTime);
+	    $('.play_pro')[0].value = curTime/mv.totalTime*100; 
+        },100);
   }
 }
-pause.onclick=function(){
-  if(this.className == "selected"){
-    this.className ="" ;
+pause_con.onclick=function(){
+  if(playing){
+    if(this.className == "selected"){
+      this.className ="" ;
+    }else{
+     this.className == "selected";
+    }
+    mv.stop();
+    clearInterval(timeinter);
+    this.src="resources/stop.png";
+    playing = false;
   }else{
-   this.className == "selected";
+    if(this.className == "selected"){
+      this.className ="" ;
+    }else{
+      this.className == "selected";
+    }
+    mv.resume(0);
+    timeinter = setInterval(function(){
+            if(playing){
+                curTime += 0.1;
+		//console.log(curTime);
+	    }
+            if(curTime-Math.round(curTime)>=0){
+	    var temp = Math.round(curTime)%60;
+                if(temp<10){
+                        $('.startTime')[0].innerHTML="0"+Math.floor(Math.round(curTime)/60)+":"+"0"+temp;
+                }else
+                $('.startTime')[0].innerHTML="0"+Math.floor(Math.round(curTime)/60)+":"+temp;
+	    }
+	   // console.log(mv);
+	    $('.play_pro')[0].value = curTime/mv.totalTime*100;
+        },100);
+    this.src="resources/play.png";
+    playing = true;
   }
-  mv.stop();
 }
-resume.onclick=function(){
-  if(this.className == "selected"){
-    this.className ="" ;
-  }else{
-   this.className == "selected";
-  }
-  mv.resume();
-}
+//resume.onclick=function(){
+//  if(this.className == "selected"){
+//    this.className ="" ;
+//  }else{
+//   this.className == "selected";
+//  }
+//  mv.resume(0);
+//}
 
 
 
@@ -130,6 +180,12 @@ for(var i=0;i<types.length;i++){
     this.className="selected";
     draw.type=this.getAttribute("data-type");
   }
+}
+
+$('.play_pro')[0].onchange=function(){
+	mv.stop();
+	mv.resume(this.value);
+	playing = true;
 }
 
 $("#volume")[0].onchange=function(){
