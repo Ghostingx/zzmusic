@@ -20,6 +20,7 @@ var Dots=[];
 var line;
 var isPlaying;
 
+var degree = 0;
 var mv=new MusicVisualizer({
   size:size,
   visualizer:draw
@@ -47,7 +48,20 @@ for(var i=0;i<lis.length;i++){
 	        $('.startTime')[0].innerHTML="0"+Math.floor(Math.round(curTime)/60)+":"+temp;
             }
 	    //console.log(mv.totalTime);
-	    $('.play_pro')[0].value = curTime/mv.totalTime*100; 
+	    //$('.play_pro')[0].value = curTime/mv.totalTime*100; 
+	   // console.log(curTime);
+	   // console.log(mv.totalTime);
+	    if(mv.totalTime>0&&curTime>=mv.totalTime){
+		curTime=0;
+                pause_con.src="resources/stop.png";
+                clearInterval(timeinter);
+	    }
+	    $('#slider')[0].style.left=curTime/mv.totalTime*400+"px";
+            $('#fill')[0].style.width=curTime/mv.totalTime*400+"px";
+	   // $('.singer_img').rorate(1);
+	   degree += 1.5;
+	   degree=degree%360;
+	   $('.singer_img').css('rotate', degree);
         },100);
   }
 }
@@ -72,7 +86,6 @@ pause_con.onclick=function(){
     timeinter = setInterval(function(){
             if(playing){
                 curTime += 0.1;
-		//console.log(curTime);
 	    }
             if(curTime-Math.round(curTime)>=0){
 	    var temp = Math.round(curTime)%60;
@@ -81,8 +94,16 @@ pause_con.onclick=function(){
                 }else
                 $('.startTime')[0].innerHTML="0"+Math.floor(Math.round(curTime)/60)+":"+temp;
 	    }
-	   // console.log(mv);
-	    $('.play_pro')[0].value = curTime/mv.totalTime*100;
+	    $('#slider')[0].style.left=curTime/mv.totalTime*400+"px";
+            $('#fill')[0].style.width=curTime/mv.totalTime*400+"px";
+	    if(mv.totalTime>0 && curTime>=mv.totalTime){
+		curTime=0;
+                pause_con.src="resources/stop.png";
+		clearInterval(timeinter);
+	    }
+	   degree += 1.5;
+           degree=degree%360;
+           $('.singer_img').css('rotate', degree);
         },100);
     this.src="resources/play.png";
     playing = true;
@@ -182,10 +203,36 @@ for(var i=0;i<types.length;i++){
   }
 }
 
-$('.play_pro')[0].onchange=function(){
+var play_pro_onclick=function(value){
 	mv.stop();
-	mv.resume(this.value);
+	mv.resume(value);
 	playing = true;
+	pause_con.src="resources/play.png";
+	   // $('.singer_img').rorate(1);
+	curTime=Math.round(value*mv.totalTime/400);
+	clearInterval(timeinter);
+	timeinter = setInterval(function(){
+            if(playing){
+                curTime += 0.1;
+            }
+            if(curTime-Math.round(curTime)>=0){
+            var temp = Math.round(curTime)%60;
+                if(temp<10){
+                        $('.startTime')[0].innerHTML="0"+Math.floor(Math.round(curTime)/60)+":"+"0"+temp;
+                }else
+                $('.startTime')[0].innerHTML="0"+Math.floor(Math.round(curTime)/60)+":"+temp;
+            }
+            $('#slider')[0].style.left=curTime/mv.totalTime*400+"px";
+            $('#fill')[0].style.width=curTime/mv.totalTime*400+"px";
+            if(mv.totalTime>0 && curTime>=mv.totalTime){
+		curTime=0;
+		pause_con.src="resources/stop.png";
+                clearInterval(timeinter);
+	    }
+           degree += 1.5;
+           degree=degree%360;
+           $('.singer_img').css('rotate', degree);
+        },100);
 }
 
 $("#volume")[0].onchange=function(){

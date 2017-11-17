@@ -7,6 +7,8 @@
   </head>
   <body>
     <div class="header">
+     <div class="song_info"><img class="singer_img" src="images/album/13.jpg"></div>
+     <div class="song_ctrl">
      <div>
       <ul class="type" id="type">
         <li data-type="dot">Dot</li>
@@ -17,14 +19,17 @@
      <div>
 	<br/>
       <p class="vol">
-        Volume <input id="volume" type="range" min="0" max="100" value="60">
+        <input id="volume" type="range" min="0" max="100" value="60">
       </p>
 	</div>
 	<br/>
 	<div>
 	<div>
 	<span class="startTime">00:00</span>
-	<input class="play_pro" type="range" min="0" max="100" value="0">
+	<div id="wrapper">
+   	    <div id="fill"></div>
+    	    <div id="slider"></div>
+	</div>
 	<span class="endTime">00.00</span>
 	</div>
 	<div>
@@ -34,6 +39,7 @@
         <li><img id="pause_con" src="resources/stop.png" ></li>
         <li><img id="next" src="resources/fw.png" ></li>
       </ul></div></div>
+	</div>
     </div>
     <div class="left">
       <ul id="list">
@@ -57,15 +63,9 @@
     <div class="right" id="box"></div>
     <script src="javascript/MusicVisualizer.js"></script>
     <script src='javascript/index.js'></script>
-    <script src='javascript/rangeSlider.js'></script>
     <script src="js/jquery-3.2.1.js"></script>
-    <script>
-	$('#volume').RangeSlider({ min: 0,   max: 100,  step: 0.1});    
-    </script>
+    <script src='javascript/jquery.rotate.js'></script>
+    <script src='javascript/slider.js'></script>
+
   </body>
 </html>
-
-
-
-
-

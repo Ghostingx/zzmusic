@@ -103,7 +103,7 @@ MusicVisualizer.prototype.start = function(buffer,time){
 MusicVisualizer.prototype.resume=function(value){
   //var self =this;
   if(value > 0){
-    newOffset = value*this.totalTime/100;
+    newOffset = value*this.totalTime/400;
     this.start(this.buffer,newOffset);
     this.startOffset = newOffset;
   }else{

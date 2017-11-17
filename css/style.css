@@ -29,6 +29,18 @@ body{
   height: 60px;
   line-height: 60px;
 }
+.song_info{
+  float:left;
+}
+.song_ctrl{
+  //float:left;
+}
+.singer_img{
+  cursor:pointer;
+  width:100px;
+  height:100px;
+  border-radius: 50px
+}
 .left{
   left: 10px;
   top: 170px;
@@ -36,6 +48,7 @@ body{
   width: 15%;
   border: solid #fff 1px;
   overflow: auto;
+  //display:none;
 }
 
 .left ul li{
@@ -169,4 +182,41 @@ input[type="range"]::-moz-range-thumb{
   width:25px;
   height:25px;
 }
-
+.startTime,.endTime{
+    margin-top:-5px;
+}
+#wrapper{
+    position: relative;
+    width:400px;
+    height:5px;
+    display: inline-block;
+    background-color:#aaaaaa;
+    border:1px solid darkgray;
+    margin:0 auto;
+    padding:0;
+    border-radius:5px;
+    cursor:pointer;
+}
+#slider{
+    position: absolute;
+    left:0;
+    width:5px;
+    height:5px;
+    display: inline-block;
+    background-color: #555555;
+    cursor:pointer;
+    border-top-right-radius:9px;
+    border-bottom-right-radius:9px;
+}
+#fill{
+    margin-left:-200px;
+    margin-top:0;
+    position:absolute;
+    display: inline-block;
+    width:0;
+    height:5px;
+    background: #ffffff;
+    cursor:pointer;
+    border-top-left-radius:9px;
+    border-bottom-left-radius:9px;
+}
