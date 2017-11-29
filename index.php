@@ -1,3 +1,8 @@
+<?php
+  require_once "lib/include.php"
+  $top_song=get_top_song();
+?>
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -131,6 +136,11 @@
         <div class="gadget">
           <p class="star"><span>本周最火</span></p><div class="clr"></div>
           <ul class="ex_menu">
+            <?php
+              foreach ($top_song as $key => $value) {
+                //$li= "<li><a href=\"play.php?song=".".mp3"."title=\"".">"."-"."</a></li>";
+              }
+            ?>
             <li><a href="#" title=" "><br>爱你-林俊杰</br></a></li>
             <li><a href="play.php?song=sleephead.mp3" title="sleephead">sleephead-garlen</a></li>
             <li><a href="#" title=" ">我欲成仙-刘欢</a></li>
@@ -148,7 +158,7 @@
     <div class="fbg_resize">
       <div class="col c1">
         <h2><span>About</span></h2>
-        <img src="images/white.jpg" width="56" height="56" alt="pix" />
+        <!-- <img src="images/white.jpg" width="56" height="56" alt="pix" /> -->
         <p>ZZ music can provide you music..........<a href="#">Learn more...</a></p>
       </div>
       <div class="col c2">
