@@ -5,7 +5,7 @@
  */
 function connect(){
 	$link=new mysqli(DB_HOST,DB_USER,DB_PWD,DB_DBNAME) or die("数据库连接失败Error");
-	$link->query("set names utf8");	
+	$link->query("set names ".DB_CHARSET);	
 //mysql_set_charset(DB_CHARSET);
 	//mysql_select_db(DB_DBNAME) or die("指定数据库打开失败");
 	return $link;
@@ -124,7 +124,7 @@ function fetchAll($sql){
  */
 function getResultNum($sql){
 	$mysql=connect();
-        $result=$mysql->query($sql);
+    $result=$mysql->query($sql);
 	$rows= $result->num_rows;
 	$result->free();
 	$mysql->close();
