@@ -1,3 +1,8 @@
+<?php
+  require_once "lib/include.php";
+  $all_song=get_all_song();
+  //var_dump($all_song);
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,7 +12,7 @@
   </head>
   <body>
     <div class="header">
-     <div class="song_info"><img class="singer_img" src="images/album/13.jpg"></div>
+     <div class="song_info"><img class="singer_img" src="images/album/13.jpg"><span>星月神话<span></div>
      <div class="song_ctrl">
      <div>
       <ul class="type" id="type">
@@ -50,8 +55,10 @@
             //  if ($dh = opendir($dir)) {
                // while (($file = readdir($dh)) !== false) {
 		// echo $file;
-		$file=$_REQUEST['song'];
-		echo '<li title="'.$file.'">'.$file.'</li>';
+		//$file=$_REQUEST['song'];
+		//$play_list=array("sleephead.mp3","我怀念的.mp3","敢爱敢做.mp3","最爱.mp3","朋友.mp3","海阔天空.mp3");
+		  foreach($all_song as $song)
+		echo '<li title="'.$song["song_name"].".mp3".'">'.$song["song_name"].'</li>';
                // } 
               //  closedir($dh);
              // }
@@ -61,11 +68,12 @@
       </ul>
     </div>
     <div class="right" id="box"></div>
+    <div class="lyric" id="lyric"><ul class="lyric_list"></ul></div>
+    <script src="javascript/getLyric.js"></script>
     <script src="javascript/MusicVisualizer.js"></script>
     <script src='javascript/index.js'></script>
     <script src="js/jquery-3.2.1.js"></script>
     <script src='javascript/jquery.rotate.js'></script>
     <script src='javascript/slider.js'></script>
-
   </body>
 </html>

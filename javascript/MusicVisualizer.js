@@ -2,14 +2,16 @@ function MusicVisualizer(obj){
   this.source=null;
 
   this.count=0;
+  this.url='';
   this.startOffset = 0;
   this.startTime = 0;
   this.totalTime=0;
   this.buffer=null;
+  this.lyric=null;
   this.analyser=MusicVisualizer.ac.createAnalyser();
   this.size=obj.size;
   this.analyser.fftSize=this.size*2;
-
+  
   this.gainNode=MusicVisualizer.ac[MusicVisualizer.ac.createGain?"createGain":"createGainNode"]();
   this.gainNode.connect(MusicVisualizer.ac.destination);
 
@@ -54,7 +56,7 @@ MusicVisualizer.prototype.decode=function(arraybuffer,fun){
 }
 
 MusicVisualizer.prototype.play=function(url){
-  //console.log(curTime);
+  console.log(url);
   curTime = 0;
   clearInterval(timeinter);
   this.startOffset = 0;
@@ -63,9 +65,10 @@ MusicVisualizer.prototype.play=function(url){
   var self=this;
   //var offset = this.startOffset;
   this.source&&this.stop();
-  if(this.buffer){
+  if(this.url==url&&this.buffer){
     this.start(this.buffer,0)
   }else{
+  this.url=url;
   this.load(url,function(arraybuffer){
     self.decode(arraybuffer,function(){})
   });
@@ -139,6 +142,39 @@ MusicVisualizer.prototype.visualize=function(){
   }
 
   requestAnimationFrame(v);
+}
+var xhrt=new XMLHttpRequest();
+MusicVisualizer.prototype.loadLrc=function(url,fun){
+  console.log(url);
+  xhrt.abort();
+  xhrt.open("GET",url);
+  xhrt.responseType="text";
+  xhrt.send();
+  var self=this;
+  xhrt.onload=function(){
+  self.lyric= Object.keys(fun(xhrt.response));
+  console.log(self.lyric);
+  }
+}
+
+MusicVisualizer.prototype.parseLyric=function(lrc) {
+    var lyrics = lrc.split("\n");
+    var lrcObj = {};
+    for(var i=0;i<lyrics.length;i++){
+        var lyric = decodeURIComponent(lyrics[i]);
+        var timeReg = /\[\d*:\d*((\.|\:)\d*)*\]/g;
+        var timeRegExpArr = lyric.match(timeReg);
+        if(!timeRegExpArr)continue;
+        var clause = lyric.replace(timeReg,'');
+        for(var k = 0,h = timeRegExpArr.length;k < h;k++) {
+            var t = timeRegExpArr[k];
+            var min = Number(String(t.match(/\[\d*/i)).slice(1)),
+                sec = Number(String(t.match(/\:\d*/i)).slice(1));
+            var time = min * 60 + sec;
+            lrcObj[time] = clause;
+        }
+    }
+    return lrcObj;
 }
 
 //setInterval(function(){

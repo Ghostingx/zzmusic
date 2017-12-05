@@ -6,4 +6,10 @@ function get_top_song($n=10){
 	$res = fetchAll($sql);
 	return $res;
 }
+
+function get_all_song(){
+        $sql = "select song_name from song;";
+        $res = fetchAll($sql);
+        return $res;
+}
 //get_top_song();

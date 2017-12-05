@@ -220,3 +220,24 @@ input[type="range"]::-moz-range-thumb{
     border-top-left-radius:9px;
     border-bottom-left-radius:9px;
 }
+.lyric{
+  position:absolute;
+  top: 170px;
+  right: 10px;
+  bottom:10px;
+  left: -webkit-calc(15% + 20px);
+  left: calc(15% + 20px);
+  z-index:10;
+  display:none;
+  overflow-y:scroll;
+}
+.lyric ul{
+  list-style:none;
+}
+.lyric ul li.selected{
+color:red;
+}
+.song_info span{
+line-height:100px;
+font-size:20px;
+}
